@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { createRoot } from 'react-dom/client';
+import Video from './Video';
+import Menu from './Menu';
+
+const VIDEOS = {
+  fast: 'https://content.codecademy.com/courses/React/react_video-fast.mp4',
+  slow: 'https://content.codecademy.com/courses/React/react_video-slow.mp4',
+  cute: 'https://content.codecademy.com/courses/React/react_video-cute.mp4',
+  eek: 'https://content.codecademy.com/courses/React/react_video-eek.mp4'
+};
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+	const [src, setSrc] = useState(VIDEOS.fast);
 
-export default App;
+  function onSelectVideoHandler(newSpeed) {
+    setSrc(VIDEOS[newSpeed]);
+  }
+
+	return (
+      <div>
+        <h1>Video Player</h1>
+        <Menu onSelectVideo={onSelectVideoHandler} />
+        <Video src={src} />
+      </div>
+    );
+};
+
+const container = document.getElementById("app");
+const root = createRoot(container);
+root.render(<App />);
+
+export default App; // This is not necessary on Codecademy platform given the project's file structure
